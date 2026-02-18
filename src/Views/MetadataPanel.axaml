@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MLoops.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MLoops.Views.MetadataPanel"
+             x:DataType="vm:MetadataViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="8">
+            <TextBlock Text="Metadata"
+                       FontSize="17"
+                       FontWeight="SemiBold"
+                       Foreground="#E8EEF6"
+                       Margin="2,2,0,4"/>
+
+            <ItemsControl ItemsSource="{Binding Sections}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:MetadataSection">
+                    <Expander IsExpanded="{Binding IsExpanded}" Margin="0,0,0,4">
+                        <Expander.Header>
+                            <TextBlock Text="{Binding Title}"
+                                       FontWeight="SemiBold" FontSize="13"
+                                       Foreground="#DCE7F4"/>
+                        </Expander.Header>
+                        <ItemsControl ItemsSource="{Binding Items}" Margin="8,6,0,0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MetadataItem">
+                                    <Border Background="#1A2330" CornerRadius="8"
+                                            BorderBrush="#24FFFFFF" BorderThickness="1"
+                                            Padding="10,8" Margin="0,3">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Label}"
+                                                FontWeight="SemiBold" FontSize="11"
+                                                Foreground="#C8D6E8"
+                                                Margin="0,0,0,2"/>
+                                            <TextBlock Text="{Binding Value}"
+                                                Foreground="#E6EDF7"
+                                                FontFamily="Consolas,Courier New,monospace"
+                                                TextWrapping="Wrap"
+                                                IsVisible="{Binding Value, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                                            <TextBlock Text="{Binding HexDump}"
+                                                Foreground="#B8C7D8"
+                                                FontFamily="Consolas,Courier New,monospace"
+                                                FontSize="11"
+                                                Background="#111923"
+                                                Padding="8,6"
+                                                Margin="0,4,0,0"
+                                                IsVisible="{Binding HexDump, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
